@@ -2,8 +2,8 @@ Sistema de Gestão de pacientes, funcionários e serviços
 --------------------------------------------------------
 
 Funcionalidades:
-	- Cadastro, Listar e remover de funcionario, pacientes e serviço
-	- Marcação de consultas: 
+	- Cadastro, Listar e remover de funcionario, pacientes e serviço - feito
+	- Marcação de consultas: feito
 		- Escolher o médico
 			- funcionario/conta do sistema
 		- Escolher a hora a ser atendido
@@ -11,10 +11,11 @@ Funcionalidades:
 			- baixa
 			- alta
 		...
-	- Formas de pagamentos aceites:
+	- Formas de pagamentos aceites: feito
 		- A cash
 		- Multicaixa
-	- Verificação pacientes que há mais de duas semanas foram marcados como mortos e apagá-los do sistema
+	- Verificação pacientes que há mais de duas semanas foram marcados como mortos e apagá-los do sistema 
+    find pacientes_mortos/ -type f -mtime +14 -delete
 	- Backup das informações dos pacientes em uma partição
 	
 Problemas:
@@ -47,3 +48,9 @@ Nivel de Funcionários:
     - Ver os backups feitos
     - Ver registros dos sistema
     - Fazer backups
+
+
+ficha do paciente:
+  - estado: morta
+  - doenca: paludismo
+  - 
