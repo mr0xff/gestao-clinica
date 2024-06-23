@@ -16,7 +16,6 @@ echo -e "** Pacientes :$USER: **\n"
 
 echo -e "\t1. Cadastrar"
 echo -e "\t2. Listar"
-echo -e "\t3. Remover"
 
 read -p "Escolha: " escolha
 

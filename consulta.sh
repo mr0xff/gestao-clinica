@@ -90,8 +90,8 @@ clear
 echo -e "** Marcação de Consultas :$USER: **\n"
 
 echo -e "\t1. Marcar"
-echo -e "\t2. Listar"
-echo -e "\t3. Antender Consultas"
+echo -e "\t2. Ver todas as consultas"
+echo -e "\t3. Antender consultas marcadas para $USER"
 
 read -p "Escolha: " escolha
 

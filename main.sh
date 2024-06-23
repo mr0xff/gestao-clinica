@@ -7,11 +7,24 @@ export ARQUIVO_SERVICOS=servicos.lst
 export ARQUIVO_CONSULTAS_MARCADAS=consultas_marcadas.lst
 export ARQUIVO_CONSULTAS_ATENDIDAS=consultas_atendidas.lst
 export PASTA=pacientes_mortos
+export LOGS_SISTEMA=logs/eventos_sistema.log
+export PASTA_BACKUP=copias_seguranca/
+export NOME_PARTICAO=/tmp/exemplo.dd
+
+function configurarNFS(){
+  # referencia para configuração https://ubuntu.com/server/docs/network-file-system-nfs
+  sudo apt install nfs-kernel-server
+  sudo systemctl start nfs-kernel-server.service
+  sudo mkdir /sistema_clinica
+  echo -e "/sistema_clinica *(ro,sync,subtree_check)" >> /etc/exports
+  sudo exportfs -a 
+}
 
 function verificarInstacao(){
   grep ${GRUPOS[0]} /etc/group
   if [[ $? -ne 0 ]]; then
-    mkdir $PASTA
+    mkdir $PASTA logs/ $PASTA_BACKUP
+    sudo ./auto_backup.sh &
     echo "configurando o grupo dos funcionários..."
     for grupo in ${GRUPOS[@]}; do
       echo $grupo
@@ -33,8 +46,7 @@ function menu(){
   echo -e "\t4. Consulta"
   echo -e "\t5. Verificar pacientes mortos"
   echo -e "\t6. Fazer backup dos dados"
-  echo -e "\t7. Permissões dos Funcionários"
-  echo -e "\t8. Sair\n"
+  echo -e "\t7. Sair\n"
 }
 
 while true; do
@@ -58,7 +70,10 @@ while true; do
     5)
       ./paciente_morto.sh
       ;;
-    8)
+    6)
+      ./backup.sh
+      ;;
+    7)
       echo "volte mais tarde!"
       exit 0
       ;;
