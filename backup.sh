@@ -3,10 +3,13 @@
 # 2. Montar a partição do backup 
 # 3. Mover para para la
 # 4. Desmontar a partição
-PONTO_MONTAGEM=/mnt/copia_securanca
+
+PONTO_MONTAGEM=/mnt/copia_seguranca
+LOGS_SISTEMA=logs/eventos_sistema.log
 
 if [[ ! -d $PONTO_MONTAGEM ]]; then
-  sudo mkdir $PONTO_MONTAGEM
+  mkdir $PONTO_MONTAGEM
+  #chmod -R 777 $PONTO_MONTAGEM
 fi
 
 clear 
@@ -26,7 +29,7 @@ if [[ $? -ne 0 ]]; then
 fi
 echo backup feito com sucesso! >> $LOGS_SISTEMA
 echo "Mountando a partição ..."
-sudo mount -t ext4 $NOME_PARTICAO $PONTO_MONTAGEM 2>>$LOGS_SISTEMA
+mount $NOME_PARTICAO $PONTO_MONTAGEM 2>>$LOGS_SISTEMA
 
 if [[ $? -ne 0 ]]; then
   echo Falha na montagem da partição >> $LOGS_SISTEMA
@@ -36,7 +39,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 echo Montagem bem sucedida! >> $LOGS_SISTEMA
-sudo cp -r $PASTA_BACKUP/* $PONTO_MONTAGEM/
+cp -r $PASTA_BACKUP/* $PONTO_MONTAGEM/
 
 if [[ $? -ne 0 ]]; then
   echo Falha na copia dos dados >> $LOGS_SISTEMA
@@ -45,7 +48,7 @@ if [[ $? -ne 0 ]]; then
   exit -1
 fi
 
-sudo umount $PONTO_MONTAGEM
+umount $PONTO_MONTAGEM
 
 if [[ $? -ne 0 ]]; then
   echo Falha na desmontagem da partição! >> $LOGS_SISTEMA

@@ -49,7 +49,8 @@ function atenderConsulta(){
   for consulta in $(cat $ARQUIVO_CONSULTAS_MARCADAS); do
     marcados=$(echo $consulta | grep $USER)
     if [[ -n $marcados ]]; then 
-      echo -e "\t$numeroPaciente. $marcados"
+      echo $consulta | tr : '\t' | sort -k6 | awk -F' ' '{print $2}'
+      #echo -e "\t$numeroPaciente. $marcados"
       numeroPaciente=$(($numeroPaciente+1))
     fi
   done
@@ -101,7 +102,7 @@ case $escolha in
   ;;
   2)
     for consulta in $(cat $ARQUIVO_CONSULTAS_MARCADAS); do
-      echo $consulta 
+      echo $consulta | tr : '\t' | sort -k6
     done
     echo
     read -p "preecione ENTER para continuar..."
