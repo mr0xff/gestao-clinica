@@ -26,7 +26,7 @@ read -p "Escolha: " escolha
   ;;
   2)
     for servico in $(cat $ARQUIVO_SERVICOS); do
-      echo $servico 
+      echo $servico | tr : "\t"
     done
     echo
     read -p "preecione ENTER para continuar..."

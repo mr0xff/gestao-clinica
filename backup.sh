@@ -22,27 +22,27 @@ echo "iniciando o backup dos dados ..."
 zip -r9 $PASTA_BACKUP/$ARQUIVO_BACKUP *.lst pacientes_mortos/ logs/ &>/dev/null
 
 if [[ $? -ne 0 ]]; then
-  echo "Falha no backup" >> $LOGS_SISTEMA
+  echo "$TEMPO_BACKUP Falha no backup" >> $LOGS_SISTEMA
   echo
   read -p "Pressione Enter para continuar ... "
   exit -1
 fi
-echo backup feito com sucesso! >> $LOGS_SISTEMA
+echo $TEMPO_BACKUP backup feito com sucesso! >> $LOGS_SISTEMA
 echo "Mountando a partição ..."
 mount $NOME_PARTICAO $PONTO_MONTAGEM 2>>$LOGS_SISTEMA
 
 if [[ $? -ne 0 ]]; then
-  echo Falha na montagem da partição >> $LOGS_SISTEMA
+  echo $TEMPO_BACKUP Falha na montagem da partição >> $LOGS_SISTEMA
   echo
   read -p "Pressione Enter para continuar ... "
   exit -1
 fi
 
-echo Montagem bem sucedida! >> $LOGS_SISTEMA
+echo $TEMPO_BACKUP Montagem bem sucedida! >> $LOGS_SISTEMA
 cp -r $PASTA_BACKUP/* $PONTO_MONTAGEM/
 
 if [[ $? -ne 0 ]]; then
-  echo Falha na copia dos dados >> $LOGS_SISTEMA
+  echo $TEMPO_BACKUP Falha na copia dos dados >> $LOGS_SISTEMA
   echo
   read -p "Pressione Enter para continuar ... "
   exit -1
@@ -51,13 +51,13 @@ fi
 umount $PONTO_MONTAGEM
 
 if [[ $? -ne 0 ]]; then
-  echo Falha na desmontagem da partição! >> $LOGS_SISTEMA
+  echo $TEMPO_BACKUP Falha na desmontagem da partição! >> $LOGS_SISTEMA
   echo
   read -p "Pressione Enter para continuar ... "
   exit -1
 fi
 
-echo Processo concluído! >> $LOGS_SISTEMA
+echo $TEMPO_BACKUP Processo concluído! >> $LOGS_SISTEMA
 echo Processo concluído!
 echo
 read -p "Pressione Enter para continuar ... "

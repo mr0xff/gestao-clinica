@@ -14,7 +14,6 @@ function cadastroFuncionario(){
     read -p "Informe o nome do funcionário: " nome_funcionario
     echo "Configure a senha do funcionario $nome_funcionario"
     sudo useradd $nome_funcionario
-    echo $nome_funcionario >> $ARQUIVO_FUNCIONARIOS
     sudo passwd $nome_funcionario
     
     numero=1
@@ -30,14 +29,17 @@ function cadastroFuncionario(){
     case $escolha in 
       1)
         sudo usermod -aG ${GRUPOS[$indice]} $nome_funcionario
+        echo $nome_funcionario:${GRUPOS[$indice]} >> $ARQUIVO_FUNCIONARIOS
         echo "O funcionário $nome_funcionario foi adicionado com sucesso ao grupo ${GRUPOS[$indice]}"
         ;;
       2)
         sudo usermod -aG ${GRUPOS[$indice]} $nome_funcionario
+        echo $nome_funcionario:${GRUPOS[$indice]} >> $ARQUIVO_FUNCIONARIOS
         echo "O funcionário $nome_funcionario foi adicionado com sucesso ao grupo ${GRUPOS[$indice]}"
         ;;
       3)
         sudo usermod -aG ${GRUPOS[$indice]} $nome_funcionario
+        echo $nome_funcionario:${GRUPOS[$indice]} >> $ARQUIVO_FUNCIONARIOS
         echo "O funcionário $nome_funcionario foi adicionado com sucesso ao grupo ${GRUPOS[$indice]}"
         ;;
       *)
@@ -60,7 +62,10 @@ case $escolha in
   ;;
   2)
     for user in $(cat $ARQUIVO_FUNCIONARIOS); do
-      id $user 
+      id $user > /dev/null
+      if [[ $? -eq 0 ]]; then
+        echo $user | tr : '\t'
+      fi
     done
     echo
     read -p "preecione ENTER para continuar..."
